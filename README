@@ -1,3 +1,2 @@
-vim-configuration
-
-This is the vim-configuration module.
+# Intro 
+A puppet module I use to manage my vim installation and configuration under Ubuntu
