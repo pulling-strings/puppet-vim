@@ -1,4 +1,4 @@
-class vim-configuration::ctags {
+class vim::ctags {
   
   package{"ctags": ensure	=> installed }
 

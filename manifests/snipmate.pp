@@ -1,4 +1,4 @@
-class vim-configuration::snipmate($dot_vim) {
+class vim::snipmate($dot_vim) {
 
    exec{'deploy snipmate-snippets':
      command     => "rsync -av --delete . $dot_vim/bundle/snipmate/snippets/",

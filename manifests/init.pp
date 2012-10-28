@@ -1,6 +1,6 @@
-# Class: vim-configuration
+# Class: vim
 #
-# This module manages vim-configuration
+# This module manages vim
 #
 # Parameters:
 #
@@ -11,7 +11,7 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class vim-configuration {
+class vim {
   $vim_pack = $is_desktop? {
      "true"  => "vim-gtk",
      "false" => "vim-nox"
@@ -21,7 +21,7 @@ class vim-configuration {
     ensure  => present
   }
 
-  include vim-configuration::ctags
+  include vim::ctags
 
   $home = "/home/$username"
   $dot_vim= "$home/.vim"
@@ -48,7 +48,7 @@ class vim-configuration {
     require  => Git::Clone[$dot_vim]
   }
 
-  class {"vim-configuration::command-t": dot_vim => $dot_vim}
-  class {"vim-configuration::snipmate": dot_vim => $dot_vim}
+  class {"vim::command-t": dot_vim => $dot_vim}
+  class {"vim::snipmate": dot_vim => $dot_vim}
 
 }

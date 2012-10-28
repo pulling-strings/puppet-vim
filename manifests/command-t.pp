@@ -1,4 +1,4 @@
-class vim-configuration::command-t($dot_vim) {
+class vim::command-t($dot_vim) {
 
   package{"ruby1.8-dev":
     ensure	=> installed
