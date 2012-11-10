@@ -12,43 +12,43 @@
 #
 # [Remember: No empty lines between comments and class definition]
 class vim {
-  $vim_pack = $is_desktop? {
-     "true"  => "vim-gtk",
-     "false" => "vim-nox"
-  }  
+  $vim_pack = $vim::is_desktop? {
+    'true'  =>'vim-gtk',
+    'false' =>'vim-nox'
+  }
 
-  package{$vim_pack:
+  package{$vim::vim_pack:
     ensure  => present
   }
 
   include vim::ctags
 
-  $home = "/home/$username"
-  $dot_vim= "$home/.vim"
+  $home = "/home/${username}"
+  $dot_vim= "${home}/.vim"
 
-  git::clone {$dot_vim:
+  git::clone {$vim::dot_vim:
     url   => 'git://github.com/narkisr/.vim.git',
-    dst   => $dot_vim,
+    dst   => $vim::dot_vim,
     owner => $username
   }
 
-  exec{".vim submodules":
-    command  => "git submodule update --init" ,
+  exec{'.vim submodules':
+    command  => 'git submodule update --init' ,
     returns  => [2,0],
-    cwd => $dot_vim,
+    cwd      => $vim::dot_vim,
     path     => ['/usr/bin/','/bin'],
     user     => $username,
-    require  => Git::Clone[$dot_vim],
+    require  => Git::Clone[$vim::dot_vim],
     provider => shell
   }
 
-  file { "$home/.vimrc":
-    ensure => link,
-    target => "$dot_vim/.vimrc",
-    require  => Git::Clone[$dot_vim]
+  file { "${home}/.vimrc":
+    ensure  => link,
+    target  => "${vim::dot_vim}/.vimrc",
+    require => Git::Clone[$vim::dot_vim]
   }
 
-  class {"vim::command-t": dot_vim => $dot_vim}
-  class {"vim::snipmate": dot_vim => $dot_vim}
+  class {'vim::commandt': dot_vim => $vim::dot_vim}
+  class {'vim::snipmate': dot_vim => $vim::dot_vim}
 
 }
