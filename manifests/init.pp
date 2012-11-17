@@ -51,8 +51,8 @@ class vim {
   class {'vim::commandt': dot_vim => $vim::dot_vim}
   class {'vim::snipmate': dot_vim => $vim::dot_vim}
 
-  class{'vim::powerline':
-    home     => $home,
-    username => $username
-  }
+  # class{'vim::powerline':
+  #   home     => $home,
+  #   username => $username
+  # }
 }
