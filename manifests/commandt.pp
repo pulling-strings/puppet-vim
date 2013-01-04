@@ -1,8 +1,10 @@
 # command-t setup for vim
 class vim::commandt($dot_vim='') {
 
-  package{'ruby1.9.1-dev':
-    ensure  => installed
+  if(defined(Package['ruby1.9.1-dev']) != true) {
+   package{'ruby1.9.1-dev':
+     ensure  => installed
+   }
   }
 
   exec{'configure command-t':
