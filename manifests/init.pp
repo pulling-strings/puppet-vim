@@ -39,7 +39,7 @@ class vim {
     path     => ['/usr/bin/','/bin'],
     user     => $username,
     require  => Git::Clone[$vim::dot_vim],
-    timeout  => 360,
+    timeout  => 560,
     provider => shell
   }
 
