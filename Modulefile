@@ -1,4 +1,4 @@
-name    'ronen-vim-configuration'
+name    'vim'
 version '0.0.1'
 source 'UNKNOWN'
 author 'ronen'
