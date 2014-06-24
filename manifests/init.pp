@@ -11,7 +11,10 @@
 # Sample Usage:
 #
 # [Remember: No empty lines between comments and class definition]
-class vim {
+class vim($home=false, $user=false){
+  validate_string($home)
+  validate_string($user)
+
   $vim_pack = $vim::is_desktop? {
     'true'  =>'vim-gtk',
     'false' =>'vim-nox'
@@ -23,13 +26,12 @@ class vim {
 
   include vim::ctags
 
-  $home = "/home/${username}"
   $dot_vim= "${home}/.vim"
 
   git::clone {$vim::dot_vim:
     url   => 'git://github.com/narkisr/.vim.git',
     dst   => $vim::dot_vim,
-    owner => $username
+    owner => $user
   }
 
   exec{'.vim submodules':
@@ -37,7 +39,7 @@ class vim {
     returns  => [2,0],
     cwd      => $vim::dot_vim,
     path     => ['/usr/bin/','/bin'],
-    user     => $username,
+    user     => $user,
     require  => Git::Clone[$vim::dot_vim],
     timeout  => 560,
     provider => shell
@@ -54,6 +56,6 @@ class vim {
 
   class{'vim::powerline':
     home     => $home,
-    username => $username
+    username => $user
   }
 }
