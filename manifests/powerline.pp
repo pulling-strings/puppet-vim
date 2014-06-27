@@ -1,7 +1,7 @@
 # Setting up vim powerline fonts
-class vim::powerline($home='',$username='') {
+class vim::powerline {
 
-  $fonts = "${home}/.fonts"
+  $fonts = "${vim::home}/.fonts"
 
   file{$fonts:
     ensure => directory
@@ -10,7 +10,7 @@ class vim::powerline($home='',$username='') {
   git::clone {"${fonts}/ubuntu-mono-powerline":
     url      => 'git://github.com/scotu/ubuntu-mono-powerline.git',
     dst      => "${fonts}/ubuntu-mono-powerline",
-    owner    => $username,
+    owner    => $vim::user,
     require  => File[$fonts]
   }
 

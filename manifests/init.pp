@@ -1,16 +1,4 @@
-# Class: vim
-#
-# This module manages vim
-#
-# Parameters:
-#
-# Actions:
-#
-# Requires:
-#
-# Sample Usage:
-#
-# [Remember: No empty lines between comments and class definition]
+# vim managment
 class vim($home=false, $user=false){
   validate_string($home)
   validate_string($user)
@@ -23,8 +11,6 @@ class vim($home=false, $user=false){
   package{$vim::vim_pack:
     ensure  => present
   }
-
-  include vim::ctags
 
   $dot_vim= "${home}/.vim"
 
@@ -54,8 +40,5 @@ class vim($home=false, $user=false){
   class {'vim::commandt': dot_vim => $vim::dot_vim}
   class {'vim::snipmate': dot_vim => $vim::dot_vim}
 
-  class{'vim::powerline':
-    home     => $home,
-    username => $user
-  }
+  include vim::powerline
 }
