@@ -3,10 +3,21 @@ class vim($home=false, $user=false){
   validate_string($home)
   validate_string($user)
 
-  $vim_pack = $vim::is_desktop? {
-    'true'  =>'vim-gtk',
-    'false' =>'vim-nox'
+  case $::osfamily {
+    'Debian': {
+      $vim_pack = $vim::is_desktop? {
+        'true'  =>'vim-gtk',
+        'false' =>'vim-nox'
+      }
+    }
+    'FreeBSD': {
+      $vim_pack = 'vim-lite'
+    }
+    default: {
+      fail("Module ${module_name} is not supported on ${::osfamily}")
+    }
   }
+
 
   package{$vim::vim_pack:
     ensure  => present
@@ -21,7 +32,7 @@ class vim($home=false, $user=false){
   }
 
   exec{'.vim submodules':
-    command  => 'git submodule update --init' ,
+    command  => "${git::params::bin} submodule update --init" ,
     returns  => [2,0],
     cwd      => $vim::dot_vim,
     path     => ['/usr/bin/','/bin'],
@@ -37,8 +48,10 @@ class vim($home=false, $user=false){
     require => Git::Clone[$vim::dot_vim]
   }
 
-  class {'vim::commandt': dot_vim => $vim::dot_vim}
-  class {'vim::snipmate': dot_vim => $vim::dot_vim}
+  if($::osfamily !='FreeBSD') {
+    class {'vim::commandt': dot_vim => $vim::dot_vim}
+    class {'vim::snipmate': dot_vim => $vim::dot_vim}
+  }
 
   include vim::powerline
 }
