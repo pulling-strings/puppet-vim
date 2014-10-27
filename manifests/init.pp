@@ -1,5 +1,9 @@
 # vim managment
-class vim($home=false, $user=false){
+class vim(
+  $home=false,
+  $user=false,
+  $repo='git://github.com/narkisr/.vim.git'
+){
   validate_string($home)
   validate_string($user)
 
@@ -15,7 +19,7 @@ class vim($home=false, $user=false){
   $dot_vim= "${home}/.vim"
 
   git::clone {$vim::dot_vim:
-    url   => 'git://github.com/narkisr/.vim.git',
+    url   => $repo,
     dst   => $vim::dot_vim,
     owner => $user
   }
