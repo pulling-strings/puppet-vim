@@ -52,7 +52,7 @@ class vim(
     require => Git::Clone[$vim::dot_vim]
   }
 
-  if($::osfamily !='FreeBSD') {
+  if($::osfamily !='FreeBSD' and $repo=='git://github.com/narkisr/.vim.git') {
     class {'vim::commandt': dot_vim => $vim::dot_vim}
     class {'vim::snipmate': dot_vim => $vim::dot_vim}
   }
