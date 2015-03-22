@@ -53,7 +53,6 @@ class vim(
   }
 
   if($::osfamily !='FreeBSD' and $repo=='git://github.com/narkisr/.vim.git') {
-    class {'vim::commandt': dot_vim => $vim::dot_vim}
     class {'vim::snipmate': dot_vim => $vim::dot_vim}
   }
 
