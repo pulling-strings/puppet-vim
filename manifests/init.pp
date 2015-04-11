@@ -7,6 +7,9 @@ class vim(
   validate_string($home)
   validate_string($user)
 
+  include ::git::params
+  validate_string(::git::params::bin)
+
   case $::osfamily {
     'Debian': {
       $vim_pack = $vim::is_desktop? {
@@ -35,8 +38,9 @@ class vim(
     owner => $user
   }
 
+
   exec{'.vim submodules':
-    command  => "${git::params::bin} submodule update --init" ,
+    command  => "${::git::params::bin} submodule update --init" ,
     returns  => [2,0],
     cwd      => $vim::dot_vim,
     path     => ['/usr/bin/','/bin'],
