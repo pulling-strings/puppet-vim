@@ -1,0 +1,37 @@
+{
+  "name": "strings-vim",
+  "version": "0.1.0",
+  "author": "Ronen Narkis <narkisr@gmail.com>",
+  "summary": "Settings up VIM",
+  "license": "Apache V2",
+  "source": "http://github.com/strings/puppet-vim",
+  "project_page": "http://github.com/strings/puppet-vim",
+  "operatingsystem_support": [
+    {
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "6",
+        "7"
+      ]
+    },
+    {
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "10.04",
+        "12.04"
+      ]
+    },
+    {
+      "operatingsystem": "FreeBSD",
+      "operatingsystemrelease": [
+        "10",
+      ]
+    }
+  ],
+  "requirements": [
+
+  ],
+  "dependencies": [
+    {"name":"puppetlabs/stdlib","version_requirement":">=4.2.0"}
+  ]
+}
