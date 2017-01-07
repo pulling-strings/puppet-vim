@@ -36,19 +36,9 @@ class vim(
     url   => $repo,
     dst   => $vim::dot_vim,
     owner => $user
-  }
+  } ->
 
-
-  exec{'.vim submodules':
-    command  => "${::git::params::bin} submodule update --init" ,
-    returns  => [2,0],
-    cwd      => $vim::dot_vim,
-    path     => ['/usr/bin/','/bin'],
-    user     => $user,
-    require  => Git::Clone[$vim::dot_vim],
-    timeout  => 560,
-    provider => shell
-  }
+  class {'vim::bundle': } ->
 
   file { "${home}/.vimrc":
     ensure  => link,
@@ -57,8 +47,12 @@ class vim(
   }
 
   if($::osfamily !='FreeBSD' and $repo=='git://github.com/narkisr/.vim.git') {
-    class {'vim::snipmate': dot_vim => $vim::dot_vim}
+    class {'vim::snipmate':
+      dot_vim => $vim::dot_vim,
+      archive => $vim::bundle::release
+    }
   }
 
   include vim::powerline
+
 }
