@@ -20,16 +20,16 @@ class vim::bundle {
 
   exec{'remove empty bundle':
     command => "rm -rf ${vim::dot_vim}/bundle",
-    user    => $::vim::user,
+    user    => root,
     path    => ['/usr/bin','/bin',],
     require => Git::Clone[$::vim::dot_vim],
   } -> Archive::Extract[$release]
 
 
   exec{'chown bundle':
-    command => "chown ${::vim::user} ${vim::dot_vim}/bundle -R",
+    command => "chown -R ${::vim::user} ${vim::dot_vim}/bundle",
     user    => 'root',
-    path    => ['/usr/bin','/bin'],
+    path    => ['/usr/bin','/bin', '/usr/sbin/'],
     require => Archive::Extract[$release]
   }
 }
