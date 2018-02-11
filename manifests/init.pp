@@ -1,14 +1,11 @@
 # vim managment
 class vim(
-  $home=false,
-  $user=false,
+  String $home='',
+  String $user='',
   $repo='git://github.com/narkisr/.vim.git'
 ){
-  validate_string($home)
-  validate_string($user)
 
   include ::git::params
-  validate_string(::git::params::bin)
 
   case $::osfamily {
     'Debian': {
